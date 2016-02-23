@@ -59,3 +59,5 @@ Since the **CORS** from the main data source ([Berlin Geoportal](http://www.stad
 </VirtualHost>
 ```
 Place or symlink the repo inside your document root and you are ready to launch the application from `your_host/apartmentHunter`
+ > Make sure you load your `proxy_module` and the `proxy_http_module` for your **Apache**. And don't forget to restart your
+ Apache after adding the VH.
