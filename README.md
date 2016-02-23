@@ -1,14 +1,15 @@
 Apartment Hunter
 ===============
 This project is a homework assignment for the
-Geodesy and Geominformation Master programm at the TU Berlin. The idea is
-to allow a user to find Aparments given some additional information on
+Geodesy and Geominformation Master program at the TU Berlin. The idea is
+to allow a user to find Apartments given some additional information on
 a map. This is a *rough* prototype and only demo features are enabled. It is meant
-to work for buildings in Berlin.
+to work for buildings in Berlin. Since this is just a fast prototype, its adapted to
+work in Firefox and you need to serve it through a web server, such as an **Apache**.
 
 ### Features
 The following map features are implemented
-* Two base maps are implemented. For this porpuse only the **OSM** basemap gives a reasonable resolution.
+* Two base maps are implemented. For this purpose only the **OSM** base map gives a reasonable resolution.
 * One thematic WMS layer representing population density.
 * Two WFS feature layers:
     * One point layer displaying public schools.
@@ -39,7 +40,7 @@ This will install all the dependencies. To build the uglified bundle run:
 ```
 npm run release
 ```
-> I had some issues with npm and browserify/uglify. If the commmand does not run, install those two globaly `npm install -g browserify`
+> I had some issues with npm and browserify/uglify. If the command does not run, install those two globally `npm install -g browserify`
 
 If you care to do some development, you can use the grunt file provided:
 ```
