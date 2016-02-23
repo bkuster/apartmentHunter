@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Web Cartography - Apartment Hunter</title>
+        <!-- browserify - because it makes sense -->
+        <script src="./scripts/bundle.js"></script>
+        <link rel="stylesheet" href="./css/master.css">
+    </head>
+    <body>
+        <!-- map container -->
+        <div id="map" class="map">
+        </div>
+        <!-- menu stuff -->
+        <div id="menu">
+            <li class="menu-item clearfix" type="search">
+                <form onsubmit="event.preventDefault();theSearch.search(this)">
+                    <div class="drop-down pull-left input-group">
+                            <input class="form-control search-field" type="text" name="search" placeholder="Address Search" onfocus="theSearch.openSearch()">
+                            <span class="input-group-btn ui_hide">
+                                <button class="btn btn-default" type="submit">
+                                    <span class="glyphicon glyphicon-search">
+                                    </span>
+                                </button>
+                                <button class="btn btn-default" type="button" onclick="event.preventDefault();theSearch.clearSearch()">
+                                    <span class="glyphicon glyphicon-remove">
+                                    </span>
+                                </button>
+                            </span>
+                    </div>
+                </form>
+                <div class="pull-right menu-icon"><span class="glyphicon glyphicon-search"></span></div>
+            </li>
+            <li class="menu-item clearfix" onclick="theMenu.menuHouse(this)" style="background:#fb8072" type="house">
+                <div class="drop-down pull-left" style="background:#fb8072">My Locations
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </div>
+                </div>
+                <div class="pull-right menu-icon"><span class="glyphicon glyphicon-home"></span></div>
+            </li>
+            <li class="menu-item clearfix" onclick="theMenu.menuLayer(this)" style="background:#fc8d62" type="feature">
+                <div class="drop-down pull-left" style="background:#fc8d62">Layers
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </div>
+                </div>
+                <div class="pull-right menu-icon"><span class="glyphicon glyphicon-map-marker"></span></span></div>
+            </li>
+            <li class="menu-item clearfix" onclick="theMenu.menuLayer(this)" style="background:#8da0cb" type="thematic">
+                <div class="drop-down pull-left" style="background:#8da0cb">Thematic Maps
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </div>
+                </div>
+                <div class="pull-right menu-icon"><span class="glyphicon glyphicon-stats"></span></span></div>
+            </li>
+            <li class="menu-item clearfix" onclick="theMenu.menuLayer(this)" style="background:#e78ac3" type="base">
+                <div class="drop-down pull-left" style="background:#e78ac3">Base Maps
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </div>
+                </div>
+                <div class="pull-right menu-icon"><span class="glyphicon glyphicon-globe"></span></span></div>
+            </li>
+            <li class="menu-item clearfix" onclick="theMenu.menuFilter(this)" style="background:#66c2a5" type="filter">
+                <div class="drop-down pull-left" style="background:#66c2a5">Filters
+                    <div class="pull-right">
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </div>
+                </div>
+                <div class="pull-right menu-icon"><span class="glyphicon glyphicon-filter"></span></div>
+            </li>
+
+        </div>
+        <!-- modal forms -->
+        <div class="modal fade" id="filterModal" role="dialog">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <a class="close" data-dismiss="modal">x</a>
+                         <h4>Custom Filter Creation</h4>
+                     </div>
+                     <div class="modal-body">
+                         <form role="form">
+                             <div class="form-group">
+                             </div>
+                         </form>
+                     </div>
+                     <div class="modal-footer">
+                         <input class="btn btn-success" value="Run Filter" id="runFilter" onclick="event.preventDefault();filterIO.submit()">
+                         <input class="btn btn-default" value="Clear" onclick="event.preventDefault();filterIO.clearAll()">
+                         <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <div class="modal fade" id="specialModal" role="dialog">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <a class="close" data-dismiss="modal">x</a>
+                         <h4>Custom Filter Creation</h4>
+                     </div>
+                     <div class="modal-body">
+                         <form role="form">
+                             <div class="form-group">
+                                 <li class="clearfix"><h4>Buildings whithin:</h4>
+                                 </li>
+                                 <li class="clearfix form-inline">Filter Name:
+                                     <input type="text" class="filterName form-control" placeholder="Filter Name"></input>
+                                 </li>
+                             </div>
+                         </form>
+                     </div>
+                     <div class="modal-footer">
+                         <input class="btn btn-success" value="Run Filter" id="runFilter" onclick="event.preventDefault();filterIO.submitSpecial(this)">
+                         <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <div class="modal fade" id="houseModal" role="dialog">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <a class="close" data-dismiss="modal">x</a>
+                         <h4>My Locations</h4>
+                     </div>
+                     <div class="modal-body">
+                     </div>
+                     <div class="modal-footer">
+                         <a class="btn btn-success" id="exportJson">Export</a>
+                         <a href="#" class="btn" data-dismiss="modal">Close</a>
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <div class="modal fade" id="helpModal" role="dialog">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <a class="close" data-dismiss="modal">x</a>
+                         <h2>How This Works</h2>
+                     </div>
+                     <div class="modal-body">
+                         <h4 id="usage">Usage</h4>
+                         <div class="usage-toc">
+                             <ul>
+                                 <li>
+                                     <a href="#usage-menu"><strong>Menu</strong></a>
+                                     <ul>
+                                         <li><a href="#usage-search">Seach</a></li>
+                                         <li><a href="#usage-menu-mylocation">Menu My Locations</a></li>
+                                         <li><a href="#usage-feature">Feature Layers</a></li>
+                                         <li><a href="#usage-thematic">Thematic Layers</a></li>
+                                         <li><a href="#usage-base">Base Layers</a></li>
+                                         <li><a href="#usage-menu-filter">Menu Filter</a></li>
+                                     </ul>
+                                 </li>
+                                 <li><a href="#usage-mylocations"><strong>My Locations</strong></a></li>
+                                 <li><a href="#usage-layers"><strong>Layers</strong></a></li>
+                                 <li><a href="#usage-interactions"><strong>Interactions</strong></a></li>
+                                 <li><a href="#usage-filters"><strong>Filters</strong></a>
+                                     <ul>
+                                         <li><a href="#usage-distanceto">Distance To</a></li>
+                                         <li><a href="#usage-within">Within</a></li>
+                                         <li><a href="#usage-hastype">Has Type</a></li>
+                                     </ul>
+                                 </li>
+                             </ul>
+                         </div>
+                         <h3 id="usage-menu">Menu</h3>
+                         <p>
+                             The content of the map is manipulated by the <strong>Menu</strong>
+                             on the left hand side of the window. To open a menu item, hover over
+                             it and click it. For the <a href="#usage-search">search</a> menu option, click
+                             into the search field to open it.<br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h4 id="usage-search">Menu Search <span class="glyphicon glyphicon-search"></span></h4>
+                         <p>
+                             The search works using the <a href="http://photon.komoot.de/">Photon</a> API.
+                             To search for an address or a point of interrest, just enter the name, surch results
+                             will be displayed in the menu similar to layers. By clicking on a search item, the map will
+                             focus on the given result.<br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h4 id="usage-menu-mylocation">Menu My Locations <span class="glyphicon glyphicon-home"></span></h4>
+                         <p>
+                             My Locations is the key feature of the application. Here
+                             you will only find a single <a href="#usage-layer">layer</a>. By clicking
+                             on it you will get an additional dialog to open up the <a href="#usage-mylocation">My Locations dialog</a>.
+                             <br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h4 id="usage-feature">Menu Feature Layers <span class="glyphicon glyphicon-map-marker"></span></h4>
+                         <p>
+                             When clicking on the Layers menu, you will see a list of
+                             all the <strong>Feature</strong> layers in the map. The difference
+                             to <a href="#usage-thematic">thematic</a> layers it, that these layer items
+                             have <a href="#usage-interactions">interactions</a>.
+                             <br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h4 id="usage-thematic">Menu Themeatic Layers <span class="glyphicon glyphicon-stats"></span></h4>
+                         <p>
+                            Thematic layers are just images, opposed to <a href="#usage-layer">Feature</a> layers. They do not
+                            show a legend but have a opacity range input which you can drag to adjust the layers opacity.
+                             <br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h4 id="usage-base">Menu Base Layers <span class="glyphicon glyphicon-globe"></span></h4>
+                         <p>
+                            By clicking on the right side of a base layer, you can change the displayed base layer.
+                             <br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h4 id="usage-menu-filter">Menu Filter<span class="glyphicon glyphicon-filter"></span></h4>
+                         <p>
+                             The created filter layers will appear here, they can be treated similar to <a href="#usage-feature">feature layers</a>
+                             since they have <a href="#usage-interactions">interactions</a>. At the bottom of
+                             the filter menu, you will see a <strong>Add Filter</strong> use this to open the <a href="#usage-filter">filter dialog</a>.
+                             <br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h3 id="usage-mylocations">My Locations</h3>
+                         <p>
+                             <strong>My Locations</strong> is the key feature of this application. It allows you
+                             to store and keep track of picked buildings.
+                         </p>
+                         <h5>Adding Buildings</h5>
+                         You can add buildings once you habe <a href="#usage-filter">filtered</a> for them. This features
+                         will appear as markers on the map. By clicking on one, the dialog will allow you to <strong>Add To My Locations</strong>.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h5>Removing Buildings</h5>
+                         Your locations will appear as houses on the map. To remove a selected house you can either click on it in the map
+                         and select the <strong>Remove From My Locations</strong> button from the dialog. Or you can delete the
+                         location from the <strong>Edit My Locations</strong> dialog by pressing on the <span class="glyphicon glyphicon-trash"></span>.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h5>Managing My Locations</h5>
+                         By clicking on the <strong>My Locations</strong> layer in the menu, select the<strong>Edit My Locations</strong> button. This will open
+                         up a dialog. Here you can see all your locations. You can delete them or zoom to their map location with
+                         <span class="glyphicon glyphicon-zoom-in"></span>. Furthermore, you can export your <strong>My Lcoations</strong> layer as
+                         a GeoJSON by selecting the <strong>Export</strong> function from the dialog.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h3 id="usage-layers">Layers</h3>
+                         <p>
+                            You can toggle their visibility
+                            by clicking on the <span class="glyphicon glyphicon-eye-open"></span>. If the sign is
+                            <span class="glyphicon glyphicon-eye-close"></span>, that means the layer is not visible in the
+                            map at the moment. By clicking on a layer you will get meta information on the
+                            layer data as well as information on the used colors. You can change the displayed property by
+                            selecting it from the drop down at the begining of the legend (only for <a href="#usage-feature">feature layers</a>).<br>
+                             <a href="#usage">To Top</a>
+                         </p>
+                         <h3 id="usage-interactions">Interactions</h3>
+                         <p>
+                             Interactions are the main way to find <a href="#usage-locations">locations</a> that can
+                             be added to <a href="#usage-mylocations">My Locations</a>. There
+                             are two primary types of map interactions:
+                             <ul>
+                                 <li>Clicking a <a href="#usage-feature">feature</a> in a feature layer. This will
+                                 allow you to search for locations in or around it.</li>
+                                 <li>Double clicking anywhere on the map. This will open up a special
+                                 dialog to search for locations around the clicked location.</li>
+                             </ul>
+                             By searchign for locations in such a fashion, you will create a <a href="#usage-filter">filter layer</a>.
+                         </p>
+                         <h3 id="usage-filters">Filters</h3>
+                         <p>
+                             Filters are the only way to find locations you could potentially add to <a href="#usage-mylocations">My Locations</a>. You
+                             can either create a filter with the <strong>Find Around</strong> or <strong>Find Within</strong> buttons
+                             provided by <a href="#usage-feature">feature layers</a> or map interactions.<br>
+                             Or you can create a filter by selecting the <strong>Add Filter</strong> from the filter menu. This will open up a dialog
+                             where you can select from three types of filters and chain them together.
+                             Be sure to allways give your filters a <strong>Name</strong>, since this is how you can identify them in
+                             the filter menu later on.
+                         </p>
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h4 id="usage-distanceto">Filter Distance To</h4>
+                         This filter allows you to search for buildings around a given point <a href="#usage-feature">feature layer</a>.
+                         Inputs are:
+                         <ul>
+                             <li>Layer: The layer to select points from</li>
+                             <li>Distance: the distance to search around the points</li>
+                         </ul>
+                         This is the only type of filter that allows you to add <strong>Sub Queries</strong>. Sub Queries allow
+                         you to narrow down the number of points selected.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h4 id="usage-within">Filter Within</h4>
+                         The within filter is a fairly simple filter that allows you to find locations inside a given area
+                         that has a ceratin property. The difference to <a href="#usage-interactions">selecting</a> a
+                         <a href="#usage-feature">feature</a> directly from the map, is that it allows you to selecting multiple features with
+                         the same attributes (or range of attributes) at the same time.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h4 href="#usage-hastype">Filter Has Type</h4>
+                         This filter allows you to directly filter for the properties a building
+                         must have, such as a good living situation or no noise.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <h5>Note on Filter Logic</h5>
+                         You can apply multiple filters at the same time. Be sure to remember,
+                         that the <strong>order</strong> in which you execute them can
+                         have a large impact on the processing time need. Furthermore, <strong>AND</strong> and
+                         <strong>OR</strong> are in the sense of a query language.
+                         This can be irritating. To search for buildings that are within the Tempelhof district
+                         <it>and</it> buildings in Wedding you must use the OR statement.
+                         <br>
+                         <a href="#usage">To Top</a>
+                         <!-- TODO this is constant work -->
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <!-- help button -->
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#helpModal" id="helpButton">
+            <span class="glyphicon glyphicon-question-sign"></span>
+        </button>
+    </body>
+</html>

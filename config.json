@@ -1,0 +1,208 @@
+{
+    "style":{
+        "Public_Schools":{
+            "name": "Public Schools",
+            "display":"Level",
+            "visible":false,
+            "icon": {
+                "url": "edu.png",
+                "scale": 0.1
+            },
+            "themes":[
+                {
+                    "key":"TRAEGER",
+                    "alias":"Maintaining Body",
+                    "exact": true,
+                    "set":"Pastel"
+                },
+                {
+                    "key":"SCHULART",
+                    "alias":"Level",
+                    "exact":true,
+                    "set":"Pastel"
+                }
+            ]
+        },
+        "Emissions":{
+            "name":"Emissions",
+            "visible":false,
+            "display":"Particle Matter 25",
+            "themes":[
+                {
+                    "key":"PM25_GES09",
+                    "alias":"Particle Matter 25",
+                    "exact":false,
+                    "set":"YlGn"
+                },
+                {
+                    "key":"NOX_GES09",
+                    "alias":"NOX",
+                    "exact":false,
+                    "set":"PuRd"
+                },
+                {
+                    "key":"PM10_GES09",
+                    "alias":"Particle Matter 10",
+                    "exact":false,
+                    "set":"PuBu"
+                }
+            ]
+        },
+        "Search_Results":{
+            "name":"Search Results",
+            "display":"_all",
+            "visible":true,
+            "icon":{
+                "url":"pin.png",
+                "scale": 0.1,
+                "anchor":[0.5,1]
+            }
+        },
+        "DblClick":{
+            "name":"Search Results",
+            "display":"_all",
+            "visible":true,
+            "icon":{
+                "url":"pin.png",
+                "scale": 0.1,
+                "anchor":[0.5,1]
+            }
+        },
+        "My_Locations":{
+            "name": "My Locations",
+            "display":"_all",
+            "visible":true,
+            "icon":{
+                "url":"actHouse.png",
+                "scale":0.1
+            },
+            "themes":[
+                {
+                    "key":"WOL",
+                    "alias":"Living Situation",
+                    "exact":true,
+                    "set":"Set"
+                },
+                {
+                    "key":"LAERM",
+                    "alias":"Noise Level",
+                    "exact":true,
+                    "set":"Set"
+                }
+            ]
+        },
+        "typeFilter":{
+            "name":null,
+            "visible":true,
+            "display": "Living Situation",
+            "icon":{
+                "url":"house.png",
+                "scale":0.1
+            },
+            "themes":[
+                {
+                    "key":"WOL",
+                    "alias":"Living Situation",
+                    "exact":true,
+                    "set":"Set"
+                },
+                {
+                    "key":"LAERM",
+                    "alias":"Noise Level",
+                    "exact":true,
+                    "set":"Set"
+                }
+            ]
+        }
+    },
+    "overlay":{
+        "Public_Schools":{
+            "title":true,
+            "alias":false,
+            "exclude":[
+                "ZWEIG_01"
+            ]
+        },
+        "Emissions":{
+            "title":false,
+            "alias":true,
+            "include":[
+                {
+                    "key":"NOX_GES09",
+                    "alias":"NOX"
+                },
+                {
+                    "key":"PM25_GES09",
+                    "alias":"Particle 25"
+                },
+                {
+                    "key":"PM10_GES09",
+                    "alias":"Particle 10"
+                }
+            ]
+        },
+        "Search_Results":{
+            "title":true,
+            "alias":false,
+            "exclude":[
+                "city", "country",
+                "osm_type", "osm_key",
+                "osm_id", "state", "geometry",
+                "extent", "name"
+            ]
+        },
+        "DblClick":{
+            "title":false,
+            "alias":false,
+            "include":[]
+        },
+        "filterType":{
+            "title":true,
+            "alias":true
+        }
+    },
+    "filter":{
+        "hasType":{
+            "Districts":[
+                {
+                    "key":"spatial_alias",
+                    "alias":"Name",
+                    "exact":true
+                }
+            ],
+            "Public_Schools":[
+                {
+                    "key":"BEZIRK",
+                    "alias":"District",
+                    "exact":true
+                },
+                {
+                    "key":"TRAEGER",
+                    "alias":"Maintaining Body",
+                    "exact":true
+                },
+                {
+                    "key":"SCHULART",
+                    "alias":"Level",
+                    "exact":true
+                },
+                {
+                    "key":"ORTSTEIL",
+                    "alias":"Neighbourhood",
+                    "exact":true
+                }
+            ]
+
+        }
+    },
+    "templates":{
+        "hasType":"<PropertyIs<%=operand%>><PropertyName><%=property%></PropertyName><Literal><%=value%></Literal></PropertyIs<%=operand%>>",
+        "request":"<wfs:GetFeature service=\"WFS\"  version=\"1.1.0\" xmlns:topp=\"http://www.openplans.org/topp\" xmlns:wfs=\"http://www.opengis.net/wfs\" xmlns:ogc=\"http://www.opengis.net/ogc\" xmlns:gml=\"http://www.opengis.net/gml\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/WFS-basic.xsd\"> <wfs:Query typeName=\"fis:re_wohnlagenadr2015Type\" xmlns:fis=\"http://www.berlin.de/broker\"> <ogc:Filter> <%= filterBody %> </ogc:Filter> </wfs:Query> </wfs:GetFeature>",
+        "within": "<ogc:Within> <ogc:PropertyName>spatial_geometry</ogc:PropertyName> <ogc:Literal> <%= geom %> </ogc:Literal> </ogc:Within>"
+    },
+    "metaData":{
+        "Public_Schools":"Public Schools layer provided by the city of Berlin. <br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>",
+        "Population_Density":"Population density based on the 2014 census. <br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>",
+        "Emissions":"Information based on the development of emissions from 1989 to 2009. Only displaying values from 2009. Values in t/a.<br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>"
+    }
+}

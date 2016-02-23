@@ -1,0 +1,193 @@
+/*HACK break into small css files*/
+#menu {
+    padding-top: 60px;
+    width:250px;
+    left: -205px;
+    position: absolute;
+}
+
+.menu-item {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 20px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    /*filter from stackoverflow http://stackoverflow.com/questions/286275/gray-out-image-with-css*/
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+#menu > li{
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+#menu > li:hover{
+    color: #FFF;
+    margin-left: 200px;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    filter: grayscale(0%);
+}
+
+/*make it clickable*/
+.drop-down{
+    padding: 10px;
+    width:200px;
+}
+
+#menu li:hover .drop-down{
+    -webkit-filter: saturate(40%);
+    -moz-filter: saturate(40%);
+    -o-filter: saturate(40%);
+    -ms-filter: saturate(40%);
+    filter: saturate(40%);
+}
+
+#menu .menu-icon {
+    padding: 10px;
+}
+
+#menu > li:hover .menu-icon {
+    padding: -10px;
+}
+
+/*keeping it open*/
+#menu > li.opened {
+    margin-left: 200px;
+    -webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    filter: grayscale(0%);
+}
+
+#menu > li.opened .drop-down{
+    padding: 10px;
+}
+
+#menu > li.opened .drop-down .pull-right .glyphicon{
+    -ms-transform: rotate(180deg); /* IE 9 */
+    -moz-transfrom: rotate(180deg);
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+}
+
+/*styling LAYERS*/
+.menu-layer{
+    font-size: 14px;
+    margin-left: 200px;
+    width:200px;
+}
+
+.menu-layer .menu-visibility{
+    padding: 10px;
+    width: 40px;
+    height:100%;
+    text-align: center;
+}
+
+.menu-visibility:hover {
+    -webkit-filter: saturate(40%);
+    -moz-filter: saturate(40%);
+    -o-filter: saturate(40%);
+    -ms-filter: saturate(40%);
+    filter: saturate(40%);
+}
+
+.menu-layer .layer-name{
+    position: absolute;
+    padding: 10px;
+    margin-left: 40px;
+    width: 160px;
+}
+
+.menu-layer .layer-name:hover{
+    -webkit-filter: saturate(40%);
+    -moz-filter: saturate(40%);
+    -o-filter: saturate(40%);
+    -ms-filter: saturate(40%);
+    filter: saturate(40%);
+}
+
+.menu-layer.opened .layer-name{
+    -webkit-filter: saturate(40%);
+    -moz-filter: saturate(40%);
+    -o-filter: saturate(40%);
+    -ms-filter: saturate(40%);
+    filter: saturate(40%);
+}
+
+/*meta data*/
+.menu-meta{
+    padding:10px;
+    font-size: 12px;
+    margin-left: 200px;
+    width:200px;
+    -webkit-filter: saturate(40%);
+    -moz-filter: saturate(40%);
+    -o-filter: saturate(40%);
+    -ms-filter: saturate(40%);
+    filter: saturate(40%);
+}
+
+#menu .menu-meta:hover{
+    color: #000;
+    -webkit-filter: saturate(40%);
+    -moz-filter: saturate(40%);
+    -o-filter: saturate(40%);
+    -ms-filter: saturate(40%);
+    filter: saturate(40%);
+}
+
+.menu-meta .glyphicon{
+    width:40px;
+}
+
+.menu-meta.menu-legend{
+    padding:0px 4px 0px 10px;
+    margin-left: 200px;
+}
+
+.menu-meta.menu-legend .glyphicon{
+    margin-right: 12px;
+}
+
+.menu-meta select{
+    padding: 2px;
+    font-size: 12px;
+}
+
+/*search fiel*/
+#menu .input-group{
+    padding-top:6px;
+    padding-bottom: 6px;
+}
+
+.menu-item[type="search"]{
+    background-color: #AAA;
+}
+
+.menu-item.opened .input-group{
+    width:100%;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.menu-search{
+    font-size: 14px;
+    width:200px;
+    margin-left:200px;
+    padding:4px 0px 4px 10px;
+    background-color: #AAA;
+}
+
+.menu-search .additional{
+    font-size: 10px;
+    color: #777;
+}
