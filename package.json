@@ -2,7 +2,9 @@
     "name": "ApartmentHunter",
     "version": "0.1.0",
     "author": "Ben Kuster",
+    "email":"b.kuster@campus.tu-berlin.de",
     "description": "Interactive map with search functions based on Open Layers & open data",
+    "license":"GPL-2.0",
     "dependencies": {
         "jquery": "2.2.0",
         "bootstrap": "3.3.6",
@@ -23,5 +25,10 @@
     },
     "scripts":{
         "release": "browserify scripts/main.js | uglifyjs > scripts/bundle.js"
+    },
+    "repository" :
+    {
+        "type" : "git",
+        "url" : "https://github.com/bkuster/apartmentHunter.git"
     }
 }
