@@ -10,7 +10,7 @@ var bootstrap = require('bootstrap');
  */
 module.exports = function(){
     Cookies.defaults = {
-        expires: 30
+        path: '/'
     }
 
     if(!Cookies.enabled){

@@ -47,17 +47,8 @@ If you care to do some development, you can use the grunt file provided:
 grunt dev
 grunt watch
 ```
-Since the **CORS** from the main data source ([Berlin Geoportal](http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wfs.shtml)) is not set properly, you will have to setup a proxy for it. Using an **Apache**, this looks something like this:
+To serve everything:
 ```
-<VirtualHost *:80>
-    ServerAdmin {yourAdmin}
-    DocumentRoot {yourDocumentRoot}
-    ServerName {yourServerName}
-
-    ProxyPass /wfs http://fbinter.stadt-berlin.de/fb/wfs/geometry/senstadt/
-    ProxyPassReverse /wfs http://fbinter.stadt-berlin.de/fb/wfs/geometry/senstadt/
-</VirtualHost>
+node server.js
 ```
-Place or symlink the repo inside your document root and you are ready to launch the application from `your_host/apartmentHunter`
- > Make sure you load your `proxy_module` and the `proxy_http_module` for your **Apache**. And don't forget to restart your
- Apache after adding the VH.
+The application can now be called from your localhost on `localhost:3000`.

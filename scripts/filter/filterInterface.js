@@ -193,6 +193,7 @@ module.exports = function(theMap, config){
                 return // TODO get building config for primaryFilter
             }
             var conf = this.hasTypeConfig[layerName.replace(/ /g, '_')];
+            jevt.siblings('.propertySelect').remove();
 
             var select = '<div> with </div><select class="propertySelect form-control" onchange="filterIO.handleHasType(this)">' +
             '<option selected disabled>Property</option>';
@@ -388,9 +389,11 @@ module.exports = function(theMap, config){
             var specModal = $('#specialModal');
             evt = $(evt);
             var filter = evt.attr('filter').split(':')[0];
-            if(filter === 'distanceTo'){
+            if((filter === 'distanceTo') && (specModal.find('.distanceTo').length == 0)){
                 var dist = '<li class="form-inline"><div> With distance of no more than: <input class="distanceTo form-control" type="text" name="distance"></input> meters</div></li>';
                 specModal.find('.modal-body').append(dist);
+            } else if(filter !== 'distanceTo'){
+                specModal.find('li:has(.distanceTo)').remove();
             }
             $('#specialModal .btn-success').attr('feature', evt.attr('filter').split(':')[1]);
             $('#specialModal .btn-success').attr('layer', evt.parent().parent().attr('name'));

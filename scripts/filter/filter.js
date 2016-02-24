@@ -84,13 +84,12 @@ module.exports = function(theMap, config){
                 source: filterSource,
                 name:layerName,
                 type: 'filter',
-                visible: false,
+                visible: true,
                 styleConfig: styleConfig
             });
 
             theMap.addLayer(filterLayer);
             theStylist.setStyle(layerName);
-
             // TODO add the new layer to the menu without moving anything
         }
 
@@ -102,7 +101,7 @@ module.exports = function(theMap, config){
         */
         this.requestAddrs = function(request, format, source){
             $.ajax({
-                url: '/wfs/re_wohnlagenadr2015',
+                url: '/re_wohnlagenadr2015',
                 type: 'POST',
                 contentType: "text/xml",
                 dataType: "text",

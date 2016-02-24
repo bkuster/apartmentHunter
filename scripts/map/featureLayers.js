@@ -21,10 +21,10 @@ module.exports = function(theMap){
             var epsg4326Extent = ol.proj.transformExtent(extent, projection, 'EPSG:4326');
                 // lat/lon messed up!
             epsg4326Extent = [epsg4326Extent[1], epsg4326Extent[0], epsg4326Extent[3], epsg4326Extent[2]];
-            var url = '/wfs/re_schulstand?' +
+            var url = '/re_schulstand?' +
                 'service=WFS&request=GetFeature&version=1.1.0&'+
                 'srsname=EPSG:25833&typename=fsi:re_schulstand';
-            $.ajax(url).done(function(response) {
+            $.ajax({url:url, dataTpye:'application/xml'}).done(function(response) {
                 var features = schoolFormat.readFeatures(response,
                 {
                     dataProjection: 'EPSG:25833',
