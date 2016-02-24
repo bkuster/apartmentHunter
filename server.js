@@ -21,3 +21,4 @@ app.all('/re_*', function (req, res, next) {
 });
 
 app.listen(3000, 'localhost');
+console.log('ApartmentHunter running at http://localhost:3000');

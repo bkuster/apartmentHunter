@@ -195,7 +195,7 @@ module.exports = function(theMap, config){
             var conf = this.hasTypeConfig[layerName.replace(/ /g, '_')];
             jevt.siblings('.propertySelect').remove();
 
-            var select = '<div> with </div><select class="propertySelect form-control" onchange="filterIO.handleHasType(this)">' +
+            var select = '<div class="propertySelect"> with </div><select class="propertySelect form-control" onchange="filterIO.handleHasType(this)">' +
             '<option selected disabled>Property</option>';
             $.map(conf, function(prop){
                 select = select + '<option value="'+
