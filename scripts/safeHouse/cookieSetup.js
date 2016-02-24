@@ -10,9 +10,8 @@ var bootstrap = require('bootstrap');
  */
 module.exports = function(){
     Cookies.defaults = {
-        path: '/',
-        domain: 'bensvm4.com'
-    };
+        expires: 30
+    }
 
     if(!Cookies.enabled){
         alert("To work properly, this site needs cookies!");
