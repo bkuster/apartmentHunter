@@ -98,7 +98,7 @@ module.exports = function(theMap, config){
                             feat.get('spatial_alias'):
                             feat.get('name');
 
-                        title = layerConfig.title ?
+                        title = layerConfig.title && title ?
                                 '<h3 class="popover-title">'+title+'</h3>':
                                 '';
 
