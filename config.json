@@ -203,6 +203,8 @@
     "metaData":{
         "Public_Schools":"Public Schools layer provided by the city of Berlin. <br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>",
         "Population_Density":"Population density based on the 2014 census. <br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>",
-        "Emissions":"Information based on the development of emissions from 1989 to 2009. Only displaying values from 2009. Values in t/a.<br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>"
+        "Emissions":"Information based on the development of emissions from 1989 to 2009. Only displaying values from 2009. Values in t/a.<br>Data source: <a href=\"http://www.stadtentwicklung.berlin.de/geoinformation/geodateninfrastruktur/de/geodienste/wms_titel.shtml\">Berlin WMS</a>",
+        "mapQuestLayer":"Satellite base map layer provided by <a href=\"http://www.mapquest.com/\">MapQuest</a>",
+        "osmLayer":"OSM base map provided by <a href=\"http://www.openstreetmap.org\">Open Street Maps</a>"
     }
 }

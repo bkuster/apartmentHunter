@@ -73,7 +73,7 @@ module.exports = function(theMap, metaData){
             domObj.toggleClass('opened');
             if(domObj.hasClass('opened')){
 
-                if(type !== 'thematic'){
+                if(type !== 'thematic' && type !=='base'){
                     var display = this.makeDisplay(name, type, evt.style['background-color']);
                     if(display){$(display).insertAfter(domObj)};
                 }
