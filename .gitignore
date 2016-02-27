@@ -3,3 +3,4 @@ oldebug/
 bower_components/
 node_modules/
 scripts/bundle.js
+report/

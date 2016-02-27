@@ -69,6 +69,7 @@ module.exports = function(theMap){
             domObj.find('.menu-icon').addClass('ui_hide');
             domObj.find('.input-group-btn').removeClass('ui_hide');
             domObj.addClass('opened');
+            this.featureLayer.setVisible(true);
         }
 
         this.clearSearch = function(){
