@@ -373,9 +373,9 @@ module.exports = function(theMap, config){
             this.appendHasType(evt);
         }
 
-        this.clearAll = function(){
+        this.clearAll = function(hidden){
             this.modalForm.empty();
-            this.new({id:'dummy'}); // HACK this needs better flow
+            if(!hidden){this.new({id:'dummy'});} // HACK this needs better flow
         }
 
         // SPECIAL FILTER ---- -------------------------------------------------
@@ -449,7 +449,7 @@ module.exports = function(theMap, config){
             var layerName = this.createDefinition();
             theFilter.runDefinition(layerName);
             $('#filterModal').modal('hide');
-            this.clearAll();
+            this.clearAll(true);
         }
 
         /**
@@ -521,7 +521,7 @@ module.exports = function(theMap, config){
 
         this.defineHasType = function(filterDef){
             var def = {};
-            def.property = filterDef.children('.propertySelect').val();
+            def.property = filterDef.children('select.propertySelect').val();
             def.operator = filterDef.children('.valueOperator').val() ? filterDef.children('.valueOperator').val() : "eq";
             def.val = filterDef.children('.valueSelect').val();
             return def;

@@ -25,11 +25,13 @@ module.exports = function(theMap){
                 source: this.featureSource
             });
 
-            var houseList = $.parseJSON(Cookies.get('houseList'));
+            var houseList = this.getHouseCookies();
+            this.nHouses = houseList.length;
+
             var format = this.featureFormat;
             var source = this.featureSource;
             $.map(houseList, function(house){
-                source.addFeature(format.readFeature($.parseJSON(house)));
+                source.addFeature(format.readFeature(house));
             });
 
             this.theMap.addLayer(this.featureLayer);
@@ -44,6 +46,24 @@ module.exports = function(theMap){
                 resolution: this.theMap.getView().getResolution()
             });
             this.theMap.beforeRender(zoom);
+        }
+
+        /**
+         * Reads all the available house cookies
+         * @return {Array<GeoJSON>}
+         */
+        this.getHouseCookies = function(){
+            var houseList = [];
+            var i = 0;
+            while (true) {
+                try {
+                    houseList.push($.parseJSON(Cookies.get('house'+i)));
+                } catch (e) {
+                    return houseList;
+                } finally {
+                    i += 1;
+                }
+            }
         }
 
         /**
@@ -73,7 +93,6 @@ module.exports = function(theMap){
         this.removeHouse = function(evt){
             evt = $(evt);
             var featId = evt.attr('location');
-
             var feature = this.featureSource.getFeatureById(featId);
             this.featureSource.removeFeature(feature);
             this.removeCookie(feature);
@@ -84,33 +103,28 @@ module.exports = function(theMap){
          * @param {ol.Feature} feature
          */
         this.removeCookie = function(feature){
-            var houseList = $.parseJSON(Cookies.get('houseList'));
-            var newList = [];
+            var houseList = this.getHouseCookies();
+            for(i in houseList){
+                Cookies.expire('house'+i);
+            }
+            var j = 0;
             $.map(houseList, function(house){
-                var house = $.parseJSON(house);
                 if(house.id !== feature.getId()){
-                    newList.push(JSON.stringify(house));
+                    Cookies.set('house'+j, JSON.stringify(house));
+                    j += 1;
                 }
             });
-            Cookies.set('houseList', JSON.stringify(newList));
+            this.nHouses = j;
         }
 
         /**
+         * TODO technically, a house can be added many times
          * @param {ol.Feature} feature
          */
         this.writeCookie = function(feature){
-            var houseList = $.parseJSON(Cookies.get('houseList'));
-            var newList = [];
-
-            $.map(houseList, function(house){
-                var house = $.parseJSON(house);
-                if(house.id !== feature.getId()){
-                    newList.push(JSON.stringify(house));
-                }
-            });
             var geoJSON = this.featureFormat.writeFeature(feature);
-            newList.push(geoJSON);
-            Cookies.set('houseList', JSON.stringify(newList));
+            Cookies.set('house'+this.nHouses, geoJSON);
+            this.nHouses += 1;
         }
 
         /**

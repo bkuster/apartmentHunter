@@ -24,8 +24,7 @@ module.exports = function(){
             '<strong>Cookies!</strong> This site uses cookies.</div>';
         $('#map').after(alert);
         Cookies.set('seen', true);
-
+        // FIXME this does not work. cookies can only be 4000K large... save like houses...
         Cookies.set('filterList', JSON.stringify([]));
-        Cookies.set('houseList', JSON.stringify([]));
     }
 }
